@@ -19,13 +19,13 @@ class MyApp extends StatelessWidget {
         Locale('zh', 'CN'),
         // Locale('en', 'US')
       ],
-      /* 1、localeListResolutionCallback回调参数locales对应安卓手机语言设置列表，而且有优先级顺序，第0个是默认语言；
+      /*
+     1、localeListResolutionCallback回调参数locales对应安卓手机语言设置列表，而且有优先级顺序，第0个是默认语言；
      2、localeListResolutionCallback回调参数supportedLocales即是MaterialApp的supportedLocales属性，没有优先级顺序，
      另外当这个列表项只有一个子项时，则只显示这个子项。比如只有 Locale('zh', 'CN')项时，只显示中文。
      3、localeListResolutionCallback回调不是必须的，关键还是supportedLocales属性、安卓手机语言设置列表。
      4、当开发flutter web版时，想显示中文，可以通过两种方式，一个是supportedLocales列表只有一个中文项，另一个是设定回调返回值为中文。
      5、若要实现手动更改UI语言文字，首先要MyApp extends StatefulWidget，二要new I18nDelegate()、setState。
-
 
       localeListResolutionCallback: (List<Locale> locales, Iterable<Locale> supportedLocales) {
         print('....... localeListResolutionCallback');

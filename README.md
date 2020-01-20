@@ -22,13 +22,20 @@
 - 六、用法：支持简单查找、支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::，例子： "pushedTimes": "按键次数{0}xxx{1}"
         
     Strings.of(context).valueOf("key") //To get a simple string
+    
     Strings.of(context).valueOf("key", args: ["A", "B", "C"]) //To get a interpoled string
+    
     Strings.of(context).pluralOf("key", 0) //To get a plural string
+    
     Strings.of(context).pluralOf("key", 0, args: ["A", "B", "C"]) //To get a plural interpoled string
+    
     Strings.of(context).valueOf("key", args: ["A", "B", "C"], namedArgs: {"named_arg_key": "Named arg"}) //To get a interpoled name string
     
+    
 - json文件格式示例：
+
 {
+
     "simple_string": "Simple string value",
     "interpolation_string": "Interpoleted {0} string {1}",
     "simple_plurals" : {
@@ -42,6 +49,7 @@
         "other": "Many itens {0} with {1}"
     },
     "interpolation_string_with_named_args": "Interpoleted {0} string with ::named_arg_key::"
+    
 }
 
 

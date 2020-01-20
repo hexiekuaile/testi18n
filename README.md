@@ -18,7 +18,7 @@
         assets:
           - ./i18n/
 - 四、在lib目录下新建i18n.dart，里面有两个类Strings、I18nDelegate。
-- 五、修改main.dart，MaterialApp的supportedLocales属性、localizationsDelegates属性,一个Text显示值,
+- 五、修改main.dart，MaterialApp的supportedLocales属性、localizationsDelegates属性,Text显示值,
 - 六、用法：支持简单查找、支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::，例子： "pushedTimes": "按键次数{0}xxx{1}"
         
     Strings.of(context).valueOf("key") //To get a simple string

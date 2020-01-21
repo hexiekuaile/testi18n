@@ -25,7 +25,7 @@
     3. Text widget 的显示值 通过国际化字符串类实例 Strings 获得。Strings.of(context).valueOf('pushedTimes')
 
 - 七、用法：支持简单查找、支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::，例子： "pushedTimes": "按键次数{0}xxx{1}"
-        
+   ```     
     Strings.of(context).valueOf("key") //To get a simple string
     
     Strings.of(context).valueOf("key", args: ["A", "B", "C"]) //To get a interpoled string
@@ -35,10 +35,10 @@
     Strings.of(context).pluralOf("key", 0, args: ["A", "B", "C"]) //To get a plural interpoled string
     
     Strings.of(context).valueOf("key", args: ["A", "B", "C"], namedArgs: {"named_arg_key": "Named arg"}) //To get a interpoled name string
-    
+    ```
     
 - 八、json文件格式示例：
-
+```
 {
 
     "simple_string": "Simple string value",
@@ -56,7 +56,7 @@
     "interpolation_string_with_named_args": "Interpoleted {0} string with ::named_arg_key::"
     
 }
-
+```
 - 九、在main.dart中的注释如下：
 
      1、localeListResolutionCallback回调参数locales对应安卓手机语言设置列表，而且有优先级顺序，第0个是默认语言；

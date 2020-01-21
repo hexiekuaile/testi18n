@@ -28,11 +28,10 @@ class MyApp extends StatelessWidget {
      5、若要实现手动更改UI语言文字，首先要MyApp extends StatefulWidget，二要new I18nDelegate()、setState。
 
       localeListResolutionCallback: (List<Locale> locales, Iterable<Locale> supportedLocales) {
-        print('....... localeListResolutionCallback');
-        print(locales);
-        print(supportedLocales);
+       
         //return locales[0];
-       return Locale('zh', 'CN');
+       //return Locale('zh', 'CN');
+       return null;
       },*/
       localizationsDelegates: [
         i18nDelegate,

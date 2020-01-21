@@ -9,7 +9,6 @@ class Strings {
   Map<String, dynamic> _map;
 
   Strings(Locale loc) {
-    print("******* Strings()");
     this._loc = loc;
   }
 
@@ -27,8 +26,6 @@ class Strings {
 
 //获取国际化字符串类
   static Future<Strings> load(Locale loc) async {
-    print("........load() async .......");
-    print(loc);
     Strings strings = new Strings(loc);
 
     String p;
@@ -39,7 +36,6 @@ class Strings {
 
     String data = await rootBundle.loadString(p);
     strings._map = json.decode(data);
-    print(strings._map);
     return strings;
   }
 
@@ -97,7 +93,6 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
 
   @override
   Future<Strings> load(Locale locale) async {
-    print("&&&&&&&& Future<Strings> load(Locale locale) async ");
     //app启动时：构造器传进来的_loc==null,locale为安卓机器首选语言
     //手动更改语言时：构造器传进来的_loc !=null
     _loc = _loc ?? locale;

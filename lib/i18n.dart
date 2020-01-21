@@ -39,7 +39,8 @@ class Strings {
     return strings;
   }
 
-  String valueOf(String key, {List<String> args, Map<String, dynamic> namedArgs}) {
+  String valueOf(String key,
+      {List<String> args, Map<String, dynamic> namedArgs}) {
     //如果json文件不存在key，则返回key
     if (!_map.containsKey(key)) return key;
 
@@ -49,15 +50,12 @@ class Strings {
     return value;
   }
 
-  String pluralOf(String key, int pluralValue, {List<String> args, Map<String, dynamic> namedArgs}) {
+  String pluralOf(String key, int pluralValue,
+      {List<String> args, Map<String, dynamic> namedArgs}) {
     if (!_map.containsKey(key)) return key;
 
     Map<String, dynamic> plurals = _map[key];
-    final plural = {
-          0: "zero",
-          1: "one"
-        }[pluralValue] ??
-        "other";
+    final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
     String value = plurals[plural].toString();
     value = _interpolateValue(value, args, namedArgs);
 
@@ -66,13 +64,15 @@ class Strings {
 
   //支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::
   //例子： "pushedTimes": "按键次数{0}xxx{1}"
-  String _interpolateValue(String value, List<String> args, Map<String, dynamic> namedArgs) {
+  String _interpolateValue(
+      String value, List<String> args, Map<String, dynamic> namedArgs) {
     for (int i = 0; i < (args?.length ?? 0); i++) {
       value = value.replaceAll("{$i}", args[i]);
     }
 
     if (namedArgs?.isNotEmpty == true) {
-      namedArgs.forEach((entryKey, entryValue) => value = value.replaceAll("::$entryKey::", entryValue.toString()));
+      namedArgs.forEach((entryKey, entryValue) =>
+          value = value.replaceAll("::$entryKey::", entryValue.toString()));
     }
 
     return value;

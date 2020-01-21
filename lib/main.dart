@@ -6,7 +6,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // 界面初始化时候，传进null，默认显示安卓界面首选语言
-  LocalizationsDelegate i18nDelegate=new I18nDelegate(null);
+  LocalizationsDelegate i18nDelegate = new I18nDelegate(null);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -71,11 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             //Text('You have pushed the button this many times:'),
-           // Text(Strings.of(context).valueOf('pushedTimes')),
-            Text(Strings.of(context).valueOf('pushedTimes', args: [
-              'aaa',
-              'bbb'
-            ])),
+            // Text(Strings.of(context).valueOf('pushedTimes')),
+            Text(Strings.of(context)
+                .valueOf('pushedTimes', args: ['aaa', 'bbb'])),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,

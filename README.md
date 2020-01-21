@@ -19,7 +19,12 @@
           - ./i18n/
 - 四、在lib目录下新建i18n.dart，里面有两个类Strings、I18nDelegate。
 - 五、修改main.dart，MaterialApp的supportedLocales属性、localizationsDelegates属性,Text显示值,
-- 六、用法：支持简单查找、支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::，例子： "pushedTimes": "按键次数{0}xxx{1}"
+- 六、整个的调用过程如下：
+    1. 把i18nDelegate国际化策略变量注册到MaterialApp的localizationsDelegates属性中。
+    2. flutter 回调 I18nDelegate 类的load方法，取得异步的国际化字符串类实例 Future < Strings > 。
+    3. Text widget 的显示值 通过国际化字符串类实例 Strings 获得。Strings.of(context).valueOf('pushedTimes')
+
+- 七、用法：支持简单查找、支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::，例子： "pushedTimes": "按键次数{0}xxx{1}"
         
     Strings.of(context).valueOf("key") //To get a simple string
     
@@ -32,7 +37,7 @@
     Strings.of(context).valueOf("key", args: ["A", "B", "C"], namedArgs: {"named_arg_key": "Named arg"}) //To get a interpoled name string
     
     
-- 七、json文件格式示例：
+- 八、json文件格式示例：
 
 {
 
@@ -52,7 +57,7 @@
     
 }
 
-- 八、在main.dart中的注释如下：
+- 九、在main.dart中的注释如下：
 
      1、localeListResolutionCallback回调参数locales对应安卓手机语言设置列表，而且有优先级顺序，第0个是默认语言；
      

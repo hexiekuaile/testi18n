@@ -78,7 +78,7 @@
      另外当这个列表项只有一个子项时，则只显示这个子项。比如只有 Locale('zh', 'CN')项时，只显示中文。
     3. localeListResolutionCallback回调不是必须的，关键还是supportedLocales属性、安卓手机语言设置列表。
     4. 当开发flutter web版时，想显示中文，可以通过两种方式，一个是supportedLocales列表只有一个中文项，另一个是设定回调返回值为中文。
-    5. 若要实现手动更改UI语言文字，首先要MyApp extends StatefulWidget，二要'i18nDelegate=new I18nDelegate(Locale('xx', 'xx'))、setState'。
+    5. 若要实现手动更改UI语言文字，首先要MyApp extends StatefulWidget，二要`i18nDelegate=new I18nDelegate(Locale('xx', 'xx'))、setState`。
 
 在学习过程中参考了如下文章:
 

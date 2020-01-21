@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
        return null;
       },*/
       localizationsDelegates: [
+        //修改这个变量、setState，可以更改UI语言文字
         i18nDelegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

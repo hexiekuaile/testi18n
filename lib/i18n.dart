@@ -14,8 +14,10 @@ class Strings {
 
   //国际化json文件目录
   String get dir => _dir;
+
   //区域
   Locale get locale => _loc;
+
   //国际化字符串map
   Map<String, dynamic> get map => _map;
 
@@ -39,8 +41,7 @@ class Strings {
     return strings;
   }
 
-  String valueOf(String key,
-      {List<String> args, Map<String, dynamic> namedArgs}) {
+  String valueOf(String key, {List<String> args, Map<String, dynamic> namedArgs}) {
     //如果json文件不存在key，则返回key
     if (!_map.containsKey(key)) return key;
 
@@ -50,12 +51,15 @@ class Strings {
     return value;
   }
 
-  String pluralOf(String key, int pluralValue,
-      {List<String> args, Map<String, dynamic> namedArgs}) {
+  String pluralOf(String key, int pluralValue, {List<String> args, Map<String, dynamic> namedArgs}) {
     if (!_map.containsKey(key)) return key;
 
     Map<String, dynamic> plurals = _map[key];
-    final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
+    final plural = {
+          0: "zero",
+          1: "one"
+        }[pluralValue] ??
+        "other";
     String value = plurals[plural].toString();
     value = _interpolateValue(value, args, namedArgs);
 
@@ -64,15 +68,13 @@ class Strings {
 
   //支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::
   //例子： "pushedTimes": "按键次数{0}xxx{1}"
-  String _interpolateValue(
-      String value, List<String> args, Map<String, dynamic> namedArgs) {
+  String _interpolateValue(String value, List<String> args, Map<String, dynamic> namedArgs) {
     for (int i = 0; i < (args?.length ?? 0); i++) {
       value = value.replaceAll("{$i}", args[i]);
     }
 
     if (namedArgs?.isNotEmpty == true) {
-      namedArgs.forEach((entryKey, entryValue) =>
-          value = value.replaceAll("::$entryKey::", entryValue.toString()));
+      namedArgs.forEach((entryKey, entryValue) => value = value.replaceAll("::$entryKey::", entryValue.toString()));
     }
 
     return value;
@@ -80,16 +82,20 @@ class Strings {
 }
 
 class I18nDelegate extends LocalizationsDelegate<Strings> {
+  //当前区域
   Locale _loc;
+  //支持的国际化区域，对应提供的国际化json字符串文件
+  static List<Locale> _supportedLocales = [
+    Locale('zh', 'CN')
+  ];
 
   I18nDelegate(this._loc);
 
-  set loc(Locale value) {
-    _loc = value;
-  }
-
   @override
-  bool isSupported(Locale locale) => true;
+  bool isSupported(Locale locale) {
+    print("............ isSupported(Locale locale)");
+    return true;
+  }
 
   @override
   Future<Strings> load(Locale locale) async {
@@ -99,10 +105,22 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
     //即安卓手机语言设置列表项 依次 是否在MaterialApp的supportedLocales列表项里
     // app启动时：构造器传进来的_loc==null
     //手动更改语言时：构造器传进来的_loc !=null
+    print("............ load(Locale locale) async");
+    print(_loc);
+    print(locale);
     _loc = _loc ?? locale;
     return Strings.load(_loc);
   }
 
   @override
   bool shouldReload(I18nDelegate old) => false;
+
+  static List<Locale> get supportedLocales => _supportedLocales;
+  static set supportedLocales(List<Locale> locales) {
+    _supportedLocales = locales;
+  }
+
+  static addSupportedLocale(Locale loc) {
+    _supportedLocales.add(loc);
+  }
 }

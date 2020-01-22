@@ -93,7 +93,11 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
 
   @override
   Future<Strings> load(Locale locale) async {
-    //app启动时：构造器传进来的_loc==null,locale为安卓机器首选语言
+    //每次程序回调本load方法时，：
+    //1、当MaterialApp的supportedLocales属性值只有一个时，参数locale=supportedLocales[0];
+    //2、当MaterialApp的supportedLocales属性值多于一个时，参数locale=安卓手机语言设置列表第0个;
+    //即安卓手机语言设置列表项 依次 是否在MaterialApp的supportedLocales列表项里
+    // app启动时：构造器传进来的_loc==null
     //手动更改语言时：构造器传进来的_loc !=null
     _loc = _loc ?? locale;
     return Strings.load(_loc);

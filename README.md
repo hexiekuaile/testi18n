@@ -79,6 +79,10 @@
     3. localeListResolutionCallback回调不是必须的，关键还是supportedLocales属性、安卓手机语言设置列表。
     4. 当开发flutter web版时，想显示中文，可以通过两种方式，一个是supportedLocales列表只有一个中文项，另一个是设定回调返回值为中文。
     5. 若要实现手动更改UI语言文字，首先要MyApp extends StatefulWidget，二要`i18nDelegate=new I18nDelegate(Locale('xx', 'xx'))、setState`。
+- 十、每次程序回调I18nDelegate策略类的load回调方法：
+   1. 当MaterialApp的supportedLocales属性值只有一个时，参数locale=supportedLocales列表的这个唯一值;
+   2. 当MaterialApp的supportedLocales属性值多于一个时，参数locale=优先级匹配后的值，安卓手机语言设置列表项 会依次 匹配supportedLocales项，看哪个匹配。
+                            
 
 在学习过程中参考了如下文章:
 

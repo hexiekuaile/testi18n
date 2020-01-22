@@ -7,6 +7,15 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   // 界面初始化时候，传进null，默认显示安卓界面首选语言
   LocalizationsDelegate i18nDelegate = new I18nDelegate(null);
+
+  Iterable<Locale> aaa() {
+    print("............ aaa()");
+    return [
+      //Locale('zh', 'CN'),
+       Locale('en', 'US')
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,11 +24,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
-      supportedLocales: [
+      supportedLocales: aaa(),
+      /*
+        supportedLocales: [
         Locale('zh', 'CN'),
         // Locale('en', 'US')
       ],
-      /*
      1、localeListResolutionCallback回调参数locales对应安卓手机语言设置列表，而且有优先级顺序，第0个是默认语言；
      2、localeListResolutionCallback回调参数supportedLocales即是MaterialApp的supportedLocales属性，没有优先级顺序，
      另外当这个列表项只有一个子项时，则只显示这个子项。比如只有 Locale('zh', 'CN')项时，只显示中文。
@@ -28,7 +38,7 @@ class MyApp extends StatelessWidget {
      5、若要实现手动更改UI语言文字，首先要MyApp extends StatefulWidget，二要i18nDelegate=new I18nDelegate(Locale('xx', 'xx'))、setState。
 
       localeListResolutionCallback: (List<Locale> locales, Iterable<Locale> supportedLocales) {
-       
+
         //return locales[0];
        //return Locale('zh', 'CN');
        return null;
@@ -72,8 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             //Text('You have pushed the button this many times:'),
             // Text(Strings.of(context).valueOf('pushedTimes')),
-            Text(Strings.of(context)
-                .valueOf('pushedTimes', args: ['aaa', 'bbb'])),
+            Text(Strings.of(context).valueOf('pushedTimes', args: [
+              'aaa',
+              'bbb'
+            ])),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,

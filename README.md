@@ -81,7 +81,7 @@
     5. 若要实现手动更改UI语言文字，首先要MyApp extends StatefulWidget，二要`i18nDelegate=new I18nDelegate(Locale('xx', 'xx'))、setState`。
 - 十、每次程序回调I18nDelegate策略类的load回调方法：
    1. 当MaterialApp的supportedLocales属性值只有一个时，参数locale=supportedLocales列表的这个唯一值;
-   2. 当MaterialApp的supportedLocales属性值多于一个时，参数locale=优先级匹配后的值，安卓手机语言设置列表项 会依次 匹配supportedLocales项，看哪个匹配。
+   2. 当MaterialApp的supportedLocales属性值多于一个时，参数locale=优先级匹配后的值，安卓手机语言设置列表项 会依次 匹配supportedLocales项，看哪个匹配。如果实在没有匹配的，则=supportedLocales[0]。
                             
 
 在学习过程中参考了如下文章:

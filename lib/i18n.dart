@@ -100,9 +100,9 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
   @override
   Future<Strings> load(Locale locale) async {
     //每次程序回调本load方法时，：
-    //1、当MaterialApp的supportedLocales属性值只有一个时，参数locale=supportedLocales[0];
-    //2、当MaterialApp的supportedLocales属性值多于一个时，参数locale=安卓手机语言设置列表第0个;
-    //即安卓手机语言设置列表项 依次 是否在MaterialApp的supportedLocales列表项里
+    //1、当MaterialApp的supportedLocales属性值只有一个时，参数locale=supportedLocales列表的这个唯一值;
+    //2、当MaterialApp的supportedLocales属性值多于一个时，参数locale=优先级匹配后的值，
+    // 安卓手机语言设置列表项 会依次 匹配supportedLocales项，看哪个匹配。如果实在没有匹配的，则=supportedLocales[0]
     // app启动时：构造器传进来的_loc==null
     //手动更改语言时：构造器传进来的_loc !=null
     print("............ load(Locale locale) async");

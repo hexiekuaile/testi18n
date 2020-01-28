@@ -85,10 +85,7 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
   //当前区域
   Locale _loc;
   //支持的国际化区域，对应提供的国际化json字符串文件
-  static List<Locale> _supportedLocales = [
-    Locale('zh', 'CN'),
-    //Locale('en','US')
-  ];
+  static List<Locale> _supportedLocales = [Locale('zh', 'CN')];
 
   I18nDelegate(this._loc);
 
@@ -104,11 +101,26 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
     // app启动时：构造器传进来的_loc==null
     //手动更改语言时：构造器传进来的_loc !=null
     _loc = _loc ?? locale;
-    return Strings.load(_loc);
+
+    Strings strings = await Strings.load(_loc);
+
+    _setSupportedLocales(strings.valueOf("supportedLocales"));
+    return strings;
   }
 
   @override
   bool shouldReload(I18nDelegate old) => false;
+
+  static void _setSupportedLocales(String str) {
+    //"supportedLocales": "zh_CN,en_US,ja_JP",
+    if (str?.isEmpty == true) return;
+    List<String> str0 = str.split(',');
+    if (str0.length <= _supportedLocales.length) return;
+    _supportedLocales = str0.map<Locale>((str00) {
+      List<String> str000 = str00.split('_');
+      return Locale(str000[0], str000[1]);
+    }).toList();
+  }
 
   static List<Locale> get supportedLocales => _supportedLocales;
 }

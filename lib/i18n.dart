@@ -43,24 +43,33 @@ class Strings {
 
   String valueOf(String key,
       {List<String> args, Map<String, dynamic> namedArgs}) {
+    String value;
+    //支持json嵌套，比如key=a.b.c
+    if (key.contains('.')) {
+      List<String> list = key.split('.');
+      dynamic map = _map;
+      for (var i = 0; i < list.length; i++) {
+        if (!((map as Map).containsKey(list[i]))) return key;
+        map = (map as Map)[list[i]];
+        if (i < list.length - 1) {
+          if (!(map is Map)) return key;
+        } else if (i == list.length - 1) {
+          if (map is Map)
+            return key;
+          else
+            value = map.toString();
+        }
+      }
+    }
+    //以下json不嵌套
     //如果json文件不存在key，则返回key
-    if (!_map.containsKey(key)) return key;
-
-    String value = _map[key].toString();
+    else {
+      if (!_map.containsKey(key)) return key;
+      value = _map[key].toString();
+    }
     //支持字符串替换
-    value = _interpolateValue(value, args, namedArgs);
-    return value;
-  }
-
-  String pluralOf(String key, int pluralValue,
-      {List<String> args, Map<String, dynamic> namedArgs}) {
-    if (!_map.containsKey(key)) return key;
-
-    Map<String, dynamic> plurals = _map[key];
-    final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
-    String value = plurals[plural].toString();
-    value = _interpolateValue(value, args, namedArgs);
-
+    if (args != null && namedArgs != null)
+      value = _interpolateValue(value, args, namedArgs);
     return value;
   }
 
@@ -94,23 +103,21 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
 
   @override
   Future<Strings> load(Locale locale) async {
-    //每次程序回调本load方法时，：
-    //1、当MaterialApp的supportedLocales属性值只有一个时，参数locale=supportedLocales列表的这个唯一值;
-    //2、当MaterialApp的supportedLocales属性值多于一个时，参数locale=优先级匹配后的值，
-    // 安卓手机语言设置列表项 会依次 匹配supportedLocales项，看哪个匹配。如果实在没有匹配的，则=supportedLocales[0]
+    //国际化策略回调load方法时，：
+    //1、当MaterialApp的supportedLocales属性值只有一个时，参数locale=supportedLocales[0];
+    //2、当MaterialApp的supportedLocales属性值多于一个时，参数locale=安卓手机语言设置列表第0个;
+    //即安卓手机语言设置列表项 依次 是否在MaterialApp的supportedLocales列表项里
     // app启动时：构造器传进来的_loc==null
     //手动更改语言时：构造器传进来的_loc !=null
     _loc = _loc ?? locale;
-
     Strings strings = await Strings.load(_loc);
 
-    _setSupportedLocales(strings.valueOf("supportedLocales"));
+    //_setSupportedLocales(strings.valueOf("supportedLocales"));
     return strings;
   }
 
-  @override
-  bool shouldReload(I18nDelegate old) => false;
-
+  //支持的策略，写在默认语言字符串文件中，
+  //故国际化策略回调load方法时，读取默认资源字符串文件，获得并修改支持的策略
   static void _setSupportedLocales(String str) {
     //"supportedLocales": "zh_CN,en_US,ja_JP",
     if (str?.isEmpty == true) return;
@@ -121,6 +128,9 @@ class I18nDelegate extends LocalizationsDelegate<Strings> {
       return Locale(str000[0], str000[1]);
     }).toList();
   }
+
+  @override
+  bool shouldReload(I18nDelegate old) => false;
 
   static List<Locale> get supportedLocales => _supportedLocales;
 }

@@ -38,8 +38,10 @@
     2. flutter 回调 I18nDelegate 类的load方法，取得异步的国际化字符串类实例 Future < Strings > 。
     3. Text widget 的显示值 通过国际化字符串类实例 Strings 获得。Strings.of(context).valueOf('pushedTimes')
 
-- 七、用法：支持简单查找、支持用字符串替换 {0} {1}等等，序号从0开始;支持用Map value替换::Map key::，例子： "pushedTimes": "按键次数{0}xxx{1}"
+- 七、用法：支持简单查找、支持用字符串替换 {0} {1}、字符串嵌套等等，序号从0开始;支持用Map value替换::Map key::，例子： "pushedTimes": "按键次数{0}xxx{1}"
    ```     
+    Strings.of(context).valueOf("a.b.c") //支持字符串嵌套
+    
     Strings.of(context).valueOf("key") //To get a simple string
     
     Strings.of(context).valueOf("key", args: ["A", "B", "C"]) //To get a interpoled string
@@ -62,12 +64,12 @@
         "one": "A item",
         "other": "Many itens"
     },
-    "interpolation_plurals": {
-        "zero": "No information {0} with {1}",
-        "one": "A item {0} with {1}",
-        "other": "Many itens {0} with {1}"
-    },
-    "interpolation_string_with_named_args": "Interpoleted {0} string with ::named_arg_key::"
+    "interpolation_string_with_named_args": "Interpoleted {0} string with ::named_arg_key::",
+    "a": {
+        "b": {
+            "c": "啊啊啊"
+        }
+    }
     
 }
 ```
